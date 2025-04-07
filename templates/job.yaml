@@ -2,13 +2,14 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: post-sync-comment
-  namespace: argocd
+  namespace: {{ .Release.Namespace }}
   annotations:
     argocd.argoproj.io/hook: PostSync
     # argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   template:
     spec:
+      serviceAccountName: {{ include "boardgame.serviceAccountName" . }}
       containers:
       - name: comment-pr
         image: djieno/alpine-curl-kubectl:amd64
