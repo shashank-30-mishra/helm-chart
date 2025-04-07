@@ -1,0 +1,6 @@
+# Chart.yaml
+apiVersion: v2
+name: boardgame
+description: A Helm chart for deploying the boardgame application
+version: 0.1.1
+appVersion: 1.0.1

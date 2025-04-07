@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: post-sync-comment
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: comment-pr
+        image: djieno/alpine-curl-kubectl:amd64
+        command:
+          - /bin/sh
+          - -c
+          - |
+            PR_NUMBER=4  # Assume the PR number is stored in a ConfigMap or secret
+            SERVICE_URL=$(kubectl get svc boardgame-ssvc -n pr-$PR_NUMBER -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+
+            set +x
+            curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 https://api.github.com/repos/$GITHUB_REPO/issues/$PR_NUMBER/comments \
+                 -d "{\"body\": \"✅ Sync Completed! 🎉\n\nService is available at: [http://$SERVICE_URL](http://$SERVICE_URL)\"}" > /dev/null 2>&1
+        env:
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: github-token-secret
+                key: key
+          - name: GITHUB_REPO
+            value: "shashank-30-mishra/Boardgame"  # Change to your GitHub repo
+      restartPolicy: Never
+
+
+

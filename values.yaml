@@ -1,0 +1,16 @@
+# values.yaml
+replicaCount: 2
+
+namespace: "custom-namespace"
+
+image:
+  repository: shashank30mishra/boardgame
+  tag: latest
+  pullPolicy: Always
+
+service:
+  name: boardgame-ssvc
+  port: 8080
+  type: LoadBalancer
+
+resources: {}
