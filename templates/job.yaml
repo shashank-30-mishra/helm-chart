@@ -17,6 +17,7 @@ spec:
           - /bin/sh
           - -c
           - |
+            sleep 500
             SERVICE_URL=$(kubectl get svc -n pr-$PR_NUMBER -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
             curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
