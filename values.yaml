@@ -16,6 +16,6 @@ service:
 resources: {}
 
 serviceAccount:
-  name: ""  # Set to override the default (e.g., pr-generator-sa)
+  name: "argocd-sa"  # Set to override the default (e.g., pr-generator-sa)
 
 secretName: github-token-secret
