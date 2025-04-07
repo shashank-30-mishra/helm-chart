@@ -6,5 +6,5 @@ metadata:
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
-    verbs: ["get"]
+    verbs: ["get", "list"]
     resourceNames: ["{{ .Values.secretName }}"]  # Secret name passed from values.yaml
