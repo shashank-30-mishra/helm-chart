@@ -17,15 +17,14 @@ spec:
           - /bin/sh
           - -c
           - |
-            sleep 500
             PR_NUMBER=6  # Assume the PR number is stored in a ConfigMap or secret
-            SERVICE_URL=$(kubectl get svc boardgame-ssvc -n pr-$PR_NUMBER -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+            SERVICE_URL=$(kubectl get svc boardgame-ssvc -n pr-$PR_NUMBER -o jsonpath='{.status.loadBalancer.ingress[0].ip}' > /dev/null 2>&1)
 
-            set +x
             curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
                  -H "Accept: application/vnd.github.v3+json" \
                  https://api.github.com/repos/$GITHUB_REPO/issues/$PR_NUMBER/comments \
                  -d "{\"body\": \"✅ Sync Completed! 🎉\n\nService is available at: [http://$SERVICE_URL](http://$SERVICE_URL)\"}" > /dev/null 2>&1
+                 echo "PR comment is completed"
         env:
           - name: GITHUB_TOKEN
             valueFrom:
@@ -33,7 +32,9 @@ spec:
                 name: github-token-secret
                 key: key
           - name: GITHUB_REPO
-            value: "shashank-30-mishra/Boardgame"  # Change to your GitHub repo
+            value: "{{ .Values.repoName }}"  # Change to your GitHub repo
+          - name: PR_NUMBER
+            value: "{{ .Values.prNumber }}"
       restartPolicy: Never
 
 

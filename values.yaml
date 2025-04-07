@@ -19,3 +19,6 @@ serviceAccount:
   name: "argocd-sa"  # Set to override the default (e.g., pr-generator-sa)
 
 secretName: github-token-secret
+
+prNumber: "6"     # Will be replaced by PR Generator
+repoName: "boardgame"  # Also set by PR Generator

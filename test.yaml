@@ -40,7 +40,7 @@ rules:
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "list"]
-    # resourceNames: ["github-token-secret"]  # Secret name passed from values.yaml
+    resourceNames: ["github-token-secret"]  # Secret name passed from values.yaml
 ---
 # Source: boardgame/templates/rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -120,7 +120,7 @@ spec:
           - -c
           - |
             sleep 500
-            PR_NUMBER=4  # Assume the PR number is stored in a ConfigMap or secret
+            PR_NUMBER=6  # Assume the PR number is stored in a ConfigMap or secret
             SERVICE_URL=$(kubectl get svc boardgame-ssvc -n pr-$PR_NUMBER -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 
             set +x
