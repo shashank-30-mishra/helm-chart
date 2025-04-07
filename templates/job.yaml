@@ -22,7 +22,7 @@ spec:
             curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
                  -H "Accept: application/vnd.github.v3+json" \
                  https://api.github.com/repos/$GITHUB_REPO/issues/$PR_NUMBER/comments \
-                 -d "{\"body\": \"✅ Sync Completed! 🎉\n\nService is available at: [http://$SERVICE_URL](http://$SERVICE_URL)\"}" > /dev/null 2>&1
+                 -d "{\"body\": \"✅ Sync Completed! 🎉\n\nService is available at: [http://$SERVICE_URL:80](http://$SERVICE_URL:80)\"}" > /dev/null 2>&1
                  echo "PR comment is completed"
         env:
           - name: GITHUB_TOKEN
