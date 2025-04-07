@@ -17,3 +17,5 @@ resources: {}
 
 serviceAccount:
   name: ""  # Set to override the default (e.g., pr-generator-sa)
+
+secretName: github-token-secret
