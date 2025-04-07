@@ -17,7 +17,7 @@ spec:
           - /bin/sh
           - -c
           - |
-            SERVICE_URL=$(kubectl get svc -n pr-$PR_NUMBER -o jsonpath='{.items[?(@.status.loadBalancer.ingress[0].ip)].status.loadBalancer.ingress[0].ip}' > /dev/null 2>&1 )
+            SERVICE_URL=$(kubectl get svc -n pr-$PR_NUMBER -o jsonpath='{.items[?(@.status.loadBalancer.ingress[0].ip)].status.loadBalancer.ingress[0].ip}' )
 
             curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
                  -H "Accept: application/vnd.github.v3+json" \
