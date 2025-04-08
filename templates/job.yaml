@@ -12,12 +12,11 @@ spec:
       serviceAccountName: {{ include "boardgame.serviceAccountName" . }}
       containers:
       - name: comment-pr
-        image: djieno/alpine-curl-kubectl:amd64
+        image: shashank30mishra/kubectl-curl:1.31
         command:
           - /bin/sh
           - -c
           - |
-            sleep 500
             SERVICE_URL=$(kubectl get svc -n pr-$PR_NUMBER -o jsonpath='{.items[?(@.status.loadBalancer.ingress[0].ip)].status.loadBalancer.ingress[0].ip}' )
 
             curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
