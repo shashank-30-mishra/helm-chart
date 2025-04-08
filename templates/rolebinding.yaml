@@ -2,11 +2,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: secret-reader-binding
-  namespace: argocd
+  namespace: preview
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.serviceAccount.name }}  # ServiceAccount name passed from values.yaml
-    namespace: argocd
+    namespace: preview
 roleRef:
   kind: Role
   name: secret-reader

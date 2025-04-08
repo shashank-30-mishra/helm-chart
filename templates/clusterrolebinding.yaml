@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.serviceAccount.name }}  # ServiceAccount name passed from values.yaml
-    namespace: argocd
+    namespace: preview
 roleRef:
   kind: ClusterRole
   name: service-reader
